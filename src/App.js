@@ -1,24 +1,40 @@
-import logo from './logo.svg';
 import './App.css';
 
+import {
+  createMuiTheme,
+  MuiThemeProvider
+} from "@material-ui/core/styles";
+
+import { useSelector } from 'react-redux'
+
+
+import SignInSide from './SignInSide'
+
+
 function App() {
+
+
+  const { isThemeLight } = useSelector(state => {
+
+    return state.theme
+  })
+
+
+  const theme = createMuiTheme({
+    palette: {
+      type: isThemeLight ? 'light' : 'dark'
+    }
+  });
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <MuiThemeProvider theme={theme}>
+
+      <div className="App">
+        <header className="App-header">
+          <SignInSide />
+        </header>
+      </div>
+    </MuiThemeProvider>
   );
 }
 
